@@ -1,8 +1,10 @@
 import React from 'react'
 
 function UserCard(props) {
-const { name, email, street, city } = props;
+const { name, email, street, city, ...rest } = props;
 const [isClicked, setIsClicked] = React.useState(false);
+
+console.log(rest);
 
    return (
     <div className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
@@ -13,6 +15,13 @@ const [isClicked, setIsClicked] = React.useState(false);
       <p className="text-gray-600">
         <span className="font-medium">Address:</span> {street}, {city}
       </p>
+
+      {Object.entries(rest).map(([key, value]) => (
+        <p key={key} className="text-gray-600">
+          <span className="font-medium">{key}:</span> {value}
+        </p>
+      ))}
+
       <button className={isClicked ? 'bg-special-green text-white px-4 py-2 rounded md' : 'bg-gray-01 text-white px-4 py-2 rounded md'}
       onClick={() => setIsClicked(true)}>
       {isClicked ? 'Clicked!' : 'Click Me'}
@@ -21,4 +30,4 @@ const [isClicked, setIsClicked] = React.useState(false);
   );
 }
 
-export default UserCard
+export default UserCard;
