@@ -1,19 +1,16 @@
-    const city = "Jakarta";
-    const street = "Jl. Sudirman No. 1";
-
-    export const getUsers = () => {
-        return fetch("https://jsonplaceholder.typicode.com/users")
-        .then((response) => response.json())
-        .then (users =>
-            users.map((user) => ({
-                name: user.name,
-                email: user.email,
-                city,
-                street,
-            }))
-        )  
-        .catch((error) => {
-            console.error("Error fetching users:", error);
-            throw error;
-        });
-    };
+export const getPosts = () => {
+  return fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((posts) =>
+      posts.map((post) => ({
+        id: post.id,
+        userId: post.userId,
+        title: post.title,
+        body: post.body,
+      }))
+    )
+    .catch((error) => {
+      console.error("Error fetching posts:", error);
+      throw error;
+    });
+};
