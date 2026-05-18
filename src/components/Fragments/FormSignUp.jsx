@@ -16,6 +16,7 @@ function FormSignUp() {
                   label="Name"
                   type="text"
                   placeholder="Aji Seno"
+                  name="name"
                 />
             </div>
             <div className="mb-6">
