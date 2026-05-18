@@ -1,6 +1,6 @@
 import React from 'react'
 import LabeledInput from "../Elements/LabeledInput";
-import CheckBox from "../Elements/Checkbox";
+import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
 
 
