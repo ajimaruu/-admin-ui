@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from "../elements/Logo";
+import Logo from "../Elements/Logo";
 
 function AuthLayout(props) {
     const { children } = props;

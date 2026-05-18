@@ -1,7 +1,7 @@
 import React from 'react'
-import LabeledInput from "../elements/LabeledInput";
-import CheckBox from "../elements/Checkbox";
-import Button from "../elements/Button";
+import LabeledInput from "../Elements/LabeledInput";
+import CheckBox from "../Elements/Checkbox";
+import Button from "../Elements/Button";
 
 
 function FormSignIn() {
