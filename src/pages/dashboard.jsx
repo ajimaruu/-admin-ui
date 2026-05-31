@@ -1,49 +1,35 @@
 import React from 'react';
 import Mainlayout from '../components/Layouts/MainLayout';
-import Card from '../components/Elements/Card';  
+import CardBalance from '../components/Fragments/CardBalance';
+import CardGoals from '../components/Fragments/CardGoals';
+import CardRecentTransactions from '../components/Fragments/CardRecentTransactions';
+import CardStatistic from '../components/Fragments/CardStatistic';
+import CardExpenseBreakdown from '../components/Fragments/CardExpenseBreakdown';
+import CardUpcomingBill from '../components/Fragments/CardUpcomingBill';
+import { transactions, bills, expensesBreakdowns } from '../data';
 
-function dashboard() {
+function dashboard() {  
   return (
     <>
     <Mainlayout>
-        <div className="grid sm:grid-cols-12 sm:grid-rows-3 gap-6">
+        <div className="grid sm:grid-cols-12 gap-6">
           <div className="sm:col-span-4">
-            <Card
-              title="Total Balance"
-              desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, autem porro asperiores numquam sed veritatis debitis beatae amet laboriosam fuga pariatur sapiente suscipit culpa facere voluptatem. Repellat asperiores doloribus earum!"
-            />
+            <CardBalance />
+         </div>
+          <div className="sm:col-span-4">
+            <CardGoals />
           </div>
           <div className="sm:col-span-4">
-            <Card
-              title="Goals"
-              desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, autem porro asperiores numquam sed veritatis debitis beatae amet laboriosam fuga pariatur sapiente suscipit culpa facere voluptatem. Repellat asperiores doloribus earum!"
-            />
+            <CardUpcomingBill data={bills} />
           </div>
-          <div className="sm:col-span-4">
-            <Card
-              title="Upcoming Bill"
-              link="/bill"
-              desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, autem porro asperiores numquam sed veritatis debitis beatae amet laboriosam fuga pariatur sapiente suscipit culpa facere voluptatem. Repellat asperiores doloribus earum!"
-            />
-          </div>
-          					<div className="sm:col-span-4 sm:row-span-2">
-            <Card
-              title="Recent Transactions"
-              link="/transactions"
-              desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, autem porro asperiores numquam sed veritatis debitis beatae amet laboriosam fuga pariatur sapiente suscipit culpa facere voluptatem. Repellat asperiores doloribus earum!"
-            />
+          <div className="sm:col-span-4 sm:row-span-2">
+            <CardRecentTransactions data={transactions} />
           </div>
           <div className="sm:col-span-8">
-            <Card
-              title="Statistics"
-              desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, autem porro asperiores numquam sed veritatis debitis beatae amet laboriosam fuga pariatur sapiente suscipit culpa facere voluptatem. Repellat asperiores doloribus earum!"
-            />
+            <CardStatistic />
           </div>
           <div className="sm:col-span-8">
-            <Card
-              title="Expenses Breakdown"
-              desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, autem porro asperiores numquam sed veritatis debitis beatae amet laboriosam fuga pariatur sapiente suscipit culpa facere voluptatem. Repellat asperiores doloribus earum!"
-            />
+            <CardExpenseBreakdown data={expensesBreakdowns} />
           </div>
         </div>
     </Mainlayout>
