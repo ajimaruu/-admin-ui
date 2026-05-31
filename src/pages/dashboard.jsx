@@ -1,5 +1,5 @@
 import React from 'react';
-import Mainlayout from '../components/Layouts/Mainlayout';
+import Mainlayout from '../components/Layouts/MainLayout';
 import Card from '../components/Elements/Card';  
 
 function dashboard() {
