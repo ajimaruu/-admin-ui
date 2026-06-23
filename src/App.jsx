@@ -6,6 +6,7 @@ import DashboardPage from "./pages/dashboard";
 import BalancePage from "./pages/balance";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+
 function App() {
   const myRouter = createBrowserRouter([
     {

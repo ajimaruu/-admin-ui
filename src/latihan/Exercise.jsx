@@ -20,12 +20,12 @@ function Exercise() {
   return (
     <>
       <div className="min-h-screen bg-gray-100 py-8 px-8 md:px-16">
-        <h1 className="text-3xl font-bold text-center mb-6 text-special-red2">
-          Posts Cards.
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-6 text-special-red2">  
+          Posts Cards.  
+        </h1> 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 max-w-[1600px] mx-auto">
-                  {posts.map((post) => (
-                <PostCard key={post.id} {...post} />
+                  {posts.map((post) => (  
+                <PostCard key={post.id} {...post} />  
             ))}
         </div>
       </div>
