@@ -54,7 +54,8 @@ function MainLayout(props) {
   return (
     <>
       <div className={`flex min-h-screen ${theme.name}`}>
-        <aside className="bg-gray-900 dark:bg-[#202020] w-28 sm:w-64 text-gray-400 dark:text-gray-300 flex flex-col justify-between px-7 py-12 transition-colors duration-300">          <div>
+        <aside className="bg-[#202020] dark:bg-[#202020] w-28 sm:w-64 text-gray-400 dark:text-gray-300 flex flex-col justify-between px-7 py-12 transition-colors duration-300">          
+          <div>
             <div>
               <div className="mb-10">
                 <Logo variant="secondary" />
@@ -89,7 +90,7 @@ function MainLayout(props) {
                   onClick={() => setTheme(t)}
                 ></div>
               ))}
-              <DarkModeToggle className="mb-2" />
+              <DarkModeToggle className="mb-2" forceWhite={true} />
             </div>
           </div>
           <div>
