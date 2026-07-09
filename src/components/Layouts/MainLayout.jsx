@@ -3,23 +3,28 @@ import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Icon from "../Elements/Icon";
+import DarkModeToggle from "../Elements/DarkModeToggle";
 import {NavLink} from "react-router-dom";
 import { ThemeContext } from "../../context/themeContext";
 import { AuthContext } from "../../context/authContext";
 import { logoutService } from "../../services/authService";
 
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 function MainLayout(props) {
   const { children } = props;
-  
-  const themes = [
-  { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
-  { name: "theme-blue", bgcolor: "bg-[#1E90FF]", color: "#1E90FF" },
-  { name: "theme-purple", bgcolor: "bg-[#6A5ACD]", color: "#6A5ACD" },
-  { name: "theme-pink", bgcolor: "bg-[#DB7093]", color: "#DB7093" },
-  { name: "theme-brown", bgcolor: "bg-[#8B4513]", color: "#8B4513" },
-];
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const { user , logout} = useContext(AuthContext);
 
-const { theme, setTheme } = useContext(ThemeContext);
+  const themes = [
+    { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
+    { name: "theme-blue", bgcolor: "bg-[#1E90FF]", color: "#1E90FF" },
+    { name: "theme-purple", bgcolor: "bg-[#6A5ACD]", color: "#6A5ACD" },
+    { name: "theme-pink", bgcolor: "bg-[#DB7093]", color: "#DB7093" },
+    { name: "theme-brown", bgcolor: "bg-[#8B4513]", color: "#8B4513" },
+  ];
 
   const menu = [
     { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
@@ -31,8 +36,8 @@ const { theme, setTheme } = useContext(ThemeContext);
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
   
-  const { user , logout} = useContext(AuthContext);
-	  const handleLogout = async () => {
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
     try {
       await logoutService();
       logout(); 
@@ -41,41 +46,42 @@ const { theme, setTheme } = useContext(ThemeContext);
       if (err.status === 401) {
         logout();
       }
+    } finally {
+      setIsLoggingOut(false);
     }
   };
   
   return (
     <>
-	    <div className={`flex min-h-screen ${theme.name}`}>
-			<aside className="bg-defaultBlack w-28 sm:w-64 text-special-bg2 flex flex-col justify-between px-7 py-12">
-        		<div>
-			<div>
-        <div className="mb-10">
-          <Logo variant="secondary" />
-        </div>
-      </div>
-						<nav>
+      <div className={`flex min-h-screen ${theme.name}`}>
+        <aside className="bg-gray-900 dark:bg-[#202020] w-28 sm:w-64 text-gray-400 dark:text-gray-300 flex flex-col justify-between px-7 py-12 transition-colors duration-300">          <div>
+            <div>
+              <div className="mb-10">
+                <Logo variant="secondary" />
+              </div>
+            </div>
+            <nav>
               {menu.map((item) => (
                 <NavLink
                   key={item.id}
                   to={item.link}
-									className={({ isActive }) =>
-                    `flex px-4 py-3 rounded-md hover:text-white hover:font-bold hover:scale-105 ${
+                  className={({ isActive }) =>
+                    `flex px-4 py-3 rounded-md hover:text-white hover:font-bold hover:scale-105 transition-all ${
                       isActive
                         ? "bg-primary text-white font-bold"
-                        : "hover:bg-special-bg3"
+                        : "hover:bg-gray-800 dark:hover:bg-gray-800"
                     }`
                   }
-                  >
+                >
                   <div className="mx-auto sm:mx-0">{item.icon}</div>
                   <div className="ms-3 hidden sm:block">{item.name}</div>
                 </NavLink>
               ))}
             </nav>
-		</div>  
-    			<div>
-            Themes
-            <div className="flex flex-col sm:flex-row gap-2 items-center">
+          </div>  
+          <div>
+            <span className="text-gray-400">Themes</span>
+            <div className="flex flex-col sm:flex-row gap-2 items-center mt-2">
               {themes.map((t) => (
                 <div
                   key={t.name}
@@ -83,44 +89,52 @@ const { theme, setTheme } = useContext(ThemeContext);
                   onClick={() => setTheme(t)}
                 ></div>
               ))}
+              <DarkModeToggle className="mb-2" />
             </div>
           </div>
-		<div>
-     <div onClick={handleLogout} className="cursor-pointer">
-		<div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
-      <div className="mx-auto sm:mx-0 text-primary"><Icon.Logout /></div>
-      <div className="ms-3 hidden sm:block">Logout</div>
-    </div>
-    </div>
-      <div className="border my-10 border-b-special-bg"></div>
-				<div className="flex justify-between items-center">
-        <div>Avatar</div>
-        <div className="hidden sm:block">
-          {user.name}
-          <br />
-          View Profile
+          <div>
+            <div onClick={handleLogout} className="cursor-pointer">
+              <div className="flex bg-gray-800 dark:bg-gray-800 text-white px-4 py-3 rounded-md">
+                <div className="mx-auto sm:mx-0 text-primary"><Icon.Logout /></div>
+                <div className="ms-3 hidden sm:block">Logout</div>
+              </div>
+            </div>
+            <div className="border my-10 border-b-gray-700"></div>
+            <div className="flex justify-between items-center text-white">
+              <div>Avatar</div>
+              <div className="hidden sm:block">
+                {user.name}
+                <br />
+                <span className="text-gray-400 text-sm">View Profile</span>
+              </div>
+              <div className="hidden sm:block">
+                <Icon.Detail size={15} />
+              </div>
+            </div>
+          </div>
+        </aside>
+
+            <div className="bg-gray-100 dark:bg-[#181818] flex-1 flex flex-col transition-colors duration-300">         
+              <header className="border-b border-gray-200 dark:border-gray-800 px-6 py-7 flex justify-between items-center transition-colors duration-300">
+            <div className="flex items-center">
+              <div className="font-bold text-2xl me-6 text-gray-900 dark:text-white transition-colors duration-300">{user.name}</div> 
+              <div className="text-gray-500 dark:text-gray-400 flex"> 
+                <Icon.ChevronRight size={20} /> <span className="ml-2">May 19, 2023 </span> 
+              </div> 
+            </div>
+            <div className="flex items-center">
+              <div className="me-10"><NotificationsIcon className="text-primary scale-110" /></div> 
+              <Input backgroundColor="bg-white" border="border-gray-300 dark:border-gray-600"/>
+            </div>
+          </header>
+          <main className="flex-1 px-6 py-4">{children}</main>
         </div>
-        <div className="hidden sm:block">
-          <Icon.Detail size={15} />
-        </div>
-        </div>
-		</div>
-      </aside>
-			<div className="bg-special-mainBg flex-1 flex flex-col">
-      <header className="border border-b border-gray-05 px-6 py-7 flex justify-between items-center">
-      <div className="flex items-center">
-        <div className="font-bold text-2xl me-6">{user.name}</div> 
-			  <div className="text-gray-03 flex"> <Icon.ChevronRight size={20} /> <span>May 19, 2023 </span> 
-        </div> 
       </div>
-			<div className="flex items-center">
-        <div className="me-10"><NotificationsIcon className="text-primary scale-110" /></div> 
-        <Input backgroundColor="bg-white" border="border-white"/>
-      </div>
-      </header>
-			<main className="flex-1 px-6 py-4">{children}</main>
-		</div>
-    </div>
+
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, display: 'flex', flexDirection: 'column' }} open={isLoggingOut}>
+        <CircularProgress color="inherit" />
+        <p className="mt-4 text-white font-medium">Logging Out</p>
+      </Backdrop>
     </>
   );
 } 

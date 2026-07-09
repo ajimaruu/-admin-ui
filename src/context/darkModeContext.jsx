@@ -1,10 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 
-export const ThemeContext = createContext();
+export const DarkModeContext = createContext();
 
-export const ThemeContextProvider = ({ children }) => {
-  const [theme, setTheme] = useState({ name: "theme-green", color: "#299D91" });
-  
+export const DarkModeContextProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("darkMode") === "true";
   });
@@ -18,11 +16,11 @@ export const ThemeContextProvider = ({ children }) => {
       root.classList.remove("dark");
       localStorage.setItem("darkMode", "false");
     }
-  }, [isDarkMode]); 
+  }, [isDarkMode]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, isDarkMode, setIsDarkMode }}>
+    <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
       {children}
-    </ThemeContext.Provider>
+    </DarkModeContext.Provider>
   );
 };

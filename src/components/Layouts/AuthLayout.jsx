@@ -1,5 +1,6 @@
 import React, { useContext} from 'react'
 import Logo from "../Elements/Logo";
+import DarkModeToggle from "../Elements/DarkModeToggle";
 import { ThemeContext } from "../../context/themeContext";
 
 function AuthLayout(props) {  
@@ -8,13 +9,14 @@ function AuthLayout(props) {
 
   return (
     <>
-    <main className={`min-h-screen bg-special-mainBg flex items-center justify-center ${theme.name}`}>
-      {/* container start */}
+    <main className={`min-h-screen bg-special-mainBg dark:bg-[#181818] flex items-center justify-center transition-colors duration-300 ${theme.name}`}>
       <div className="w-full max-w-sm">
-    <Logo/>
-    {children}
+        <Logo/>
+        {children}
+        <div className="flex justify-center mt-6">
+          <DarkModeToggle />
+        </div>
       </div>
-      {/* container end */}
     </main>  
     </>
     );

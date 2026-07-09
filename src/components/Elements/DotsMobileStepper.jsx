@@ -8,7 +8,7 @@ import { ThemeContext } from "../../context/themeContext";
 
 export default function DotsMobileStepper(props) {
   const { data } = props;
-  const { theme : themeMode} = React.useContext(ThemeContext);
+  const { theme : themeMode, isDarkMode } = React.useContext(ThemeContext);
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -31,9 +31,10 @@ export default function DotsMobileStepper(props) {
         sx={{
           maxWidth: "400",
           flexGrow: 1,
+          backgroundColor: "transparent", 
           "& .MuiMobileStepper-dot": { 
-	          backgroundColor: "darkgray" 
-	        },
+            backgroundColor: isDarkMode ? "#555" : "darkgray"
+          },
           "& .MuiMobileStepper-dotActive": {
             backgroundColor: themeMode.color,
           },
@@ -43,7 +44,12 @@ export default function DotsMobileStepper(props) {
             size="small"
             onClick={handleNext}
             disabled={activeStep === data.length - 1}
-            sx={{ color: "black" }}
+            sx={{ 
+              color: isDarkMode ? "white" : "black", 
+              "&.Mui-disabled": {
+                color: isDarkMode ? "#555555" : "rgba(0, 0, 0, 0.26)" 
+              }
+            }}
           >
             Next
             {theme.direction === "rtl" ? (
@@ -55,10 +61,15 @@ export default function DotsMobileStepper(props) {
         }
         backButton={
           <Button 
-          size="small" 
-          onClick={handleBack} 
-          disabled={activeStep === 0} 
-          sx={{ color: "black" }}
+            size="small" 
+            onClick={handleBack} 
+            disabled={activeStep === 0} 
+            sx={{ 
+              color: isDarkMode ? "white" : "black", 
+              "&.Mui-disabled": {
+                color: isDarkMode ? "#555555" : "rgba(0, 0, 0, 0.26)"
+              }
+            }}
           >
             {theme.direction === "rtl" ? (
               <KeyboardArrowRight />
